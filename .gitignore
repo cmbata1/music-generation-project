@@ -1,0 +1,6 @@
+.venv/
+raw/
+classic-midi-files-raw/
+full_sequences.npz
+preprocessed_data.npz
+notebooks/prototype_sequences.npz
