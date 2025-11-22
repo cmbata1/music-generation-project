@@ -1,1 +1,1 @@
-# music-generation-project
+# Music Generation Project
