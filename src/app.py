@@ -1,62 +1,82 @@
-import os
+# src/app.py
+
+from pathlib import Path
+
 import numpy as np
 import torch
 import streamlit as st
 
-from model import load_trained_model          
-from music_utils import (                     
+from model import load_trained_model
+from music_utils import (
     build_id_to_token,
-    generate_tokens,
-    tokens_to_pretty_midi,
+    build_token_to_id,
 )
 
-# ------------------ CONFIG ------------------
-DEVICE = "cpu"  
+from tabs.dataset_tab import render_dataset_tab
+from tabs.piano_tab import render_piano_tab
+from tabs.preset_tab import render_preset_tab
 
-CHECKPOINT_PATH = "checkpoints/music_gru.ckpt"  # TODO: update if needed
-VOCAB_PATH = "data/vocab.npy"                   # TODO: update if needed
-X_IDS_PATH = "data/X_ids.npy"                   # TODO: update if needed
-OUTPUT_DIR = "generated"                        # where to save MIDIs
+# -------------------------------------------------------------------
+# Paths (relative to this file → project root)
+# -------------------------------------------------------------------
+APP_DIR = Path(__file__).resolve().parent          # .../src
+BASE_DIR = APP_DIR.parent                          # project root
 
-st.set_page_config(page_title="Music Generator", layout="wide")
+CHECKPOINT_PATH = BASE_DIR / "checkpoints" / "music_gru_checkpoint.pt"
+FULL_SEQS_PATH = BASE_DIR / "data" / "processed" / "full_sequences.npz"
+GENERATED_DIR = BASE_DIR / "generated"
+GENERATED_DIR.mkdir(exist_ok=True)
 
+# -------------------------------------------------------------------
+# Device selection
+# -------------------------------------------------------------------
+if torch.backends.mps.is_available():
+    DEVICE = torch.device("mps")
+    device_label = "Apple Silicon GPU (MPS)"
+elif torch.cuda.is_available():
+    DEVICE = torch.device("cuda")
+    device_label = "CUDA GPU"
+else:
+    DEVICE = torch.device("cpu")
+    device_label = "CPU"
 
-# ------------------ LOADING ------------------
+# -------------------------------------------------------------------
+# Streamlit config
+# -------------------------------------------------------------------
+st.set_page_config(page_title="Music Generation Demo", layout="wide")
+
+st.title("🎵 GRU Music Generator")
+st.caption(f"Running on: **{device_label}**")
+st.write(
+    "This app showcases a GRU-based music generation model. "
+    "You can either seed the model with an existing sequence from the dataset, "
+    "or build a custom melody using a piano-style interface."
+)
+
+# -------------------------------------------------------------------
+# Cache: load model + data once
+# -------------------------------------------------------------------
 @st.cache_resource
 def load_model_and_data():
-    # Load trained model + seq_len from your helper
+    # Load model + seq_len from checkpoint
     model, seq_len = load_trained_model(CHECKPOINT_PATH, DEVICE)
 
-    # Load vocab and build mapping
-    vocab = np.load(VOCAB_PATH)
+    # Load processed data
+    data = np.load(FULL_SEQS_PATH, allow_pickle=True)
+    X_ids = data["X"]
+    vocab = data["vocab"]  # shape: (vocab_size, 2) [pitch, bucket]
+
     id_to_token = build_id_to_token(vocab)
+    token_to_id = build_token_to_id(id_to_token)
 
-    # Load seed sequences (X_ids)
-    # If you saved a dict/npz, adjust accordingly:
-    #   data = np.load(X_IDS_PATH)
-    #   X_ids = data["X_ids"]
-    X_ids = np.load(X_IDS_PATH)
-
-    return model, id_to_token, X_ids, seq_len
+    return model, seq_len, X_ids, id_to_token, token_to_id
 
 
-def read_file_bytes(path: str) -> bytes:
-    """Read any file as raw bytes (for st.audio and download)."""
-    with open(path, "rb") as f:
-        return f.read()
+model, SEQ_LEN, X_ids, id_to_token, token_to_id = load_model_and_data()
 
-
-# ------------------ UI ------------------
-st.title("🎵 GRU Music Generator")
-st.write(
-    "Generate short musical sequences from your trained GRU model. "
-    "Use the sidebar to adjust the temperature, number of tokens, and seed."
-)
-
-# Load model + data once, cached
-model, id_to_token, X_ids, SEQ_LEN = load_model_and_data()
-
-# ------------- SIDEBAR CONTROLS -------------
+# -------------------------------------------------------------------
+# Sidebar: global generation settings (shared by both tabs)
+# -------------------------------------------------------------------
 with st.sidebar:
     st.header("Generation Settings")
 
@@ -72,82 +92,61 @@ with st.sidebar:
         "Temperatures to compare",
         options=[0.4, 0.6, 0.8, 1.0, 1.2, 1.4],
         default=[0.8, 1.0],
+        help="Higher temperature → more randomness; lower → more conservative.",
     )
-
-    seed_mode = st.radio(
-        "Seed selection",
-        ["Random seed from dataset", "Pick specific index"],
-    )
-
-    seed_index = None
-    if seed_mode == "Pick specific index":
-        max_idx = int(X_ids.shape[0] - 1)
-        seed_index = st.number_input(
-            "Seed index",
-            min_value=0,
-            max_value=max_idx,
-            value=0,
-            step=1,
-        )
 
     base_name = st.text_input(
         "Base name for output files",
         value="generated_sample",
     )
 
-    generate_button = st.button("Generate")
+# Make sure custom seed state exists for piano tab
+if "custom_seed_notes" not in st.session_state:
+    st.session_state.custom_seed_notes = []  # list of (pitch, bucket)
 
+# -------------------------------------------------------------------
+# Tabs
+# -------------------------------------------------------------------
+tab1, tab2, tab3 = st.tabs(
+    ["Seed from dataset", "Custom seed (piano)", "Preset melodies"]
+)
 
-# ------------- MAIN BEHAVIOR -------------
-if generate_button:
-    # choose seed
-    if seed_mode == "Random seed from dataset":
-        idx = int(np.random.randint(0, X_ids.shape[0]))
-    else:
-        idx = int(seed_index)
+with tab1:
+    render_dataset_tab(
+        model=model,
+        device=DEVICE,
+        X_ids=X_ids,
+        seq_len=SEQ_LEN,
+        id_to_token=id_to_token,
+        num_tokens=num_tokens,
+        temps=temps,
+        base_name=base_name,
+        generated_dir=GENERATED_DIR,
+    )
 
-    seed_seq = X_ids[idx]
-    st.write(f"Using seed sequence index: **{idx}**")
+with tab2:
+    render_piano_tab(
+        model=model,
+        device=DEVICE,
+        seq_len=SEQ_LEN,
+        id_to_token=id_to_token,
+        token_to_id=token_to_id,
+        num_tokens=num_tokens,
+        temps=temps,
+        base_name=base_name,
+        generated_dir=GENERATED_DIR,
+    )
 
-    # make sure output dir exists
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
+with tab3:
+    render_preset_tab(
+        model=model,
+        device=DEVICE,
+        seq_len=SEQ_LEN,
+        id_to_token=id_to_token,
+        token_to_id=token_to_id,
+        num_tokens=num_tokens,
+        temps=temps,
+        base_name=base_name,
+        generated_dir=GENERATED_DIR,
+    )
 
-    if len(temps) == 0:
-        st.warning("Please select at least one temperature.")
-    else:
-        cols = st.columns(len(temps))
-
-        for temp, col in zip(temps, cols):
-            with col:
-                st.subheader(f"T = {temp:.2f}")
-
-                # generate token IDs
-                gen_ids = generate_tokens(
-                    model,
-                    seed_seq,
-                    seq_len=SEQ_LEN,
-                    num_tokens=num_tokens,
-                    temperature=temp,
-                    device=DEVICE,
-                )
-
-                # write to MIDI
-                midi_name = f"{base_name}_seed{idx}_T{temp:.2f}.mid"
-                midi_path = os.path.join(OUTPUT_DIR, midi_name)
-                tokens_to_pretty_midi(gen_ids, id_to_token, midi_path)
-
-                # load raw bytes
-                midi_bytes = read_file_bytes(midi_path)
-
-                # audio player (note: browser MIDI support can vary)
-                st.audio(midi_bytes, format="audio/midi")
-
-                # download button
-                st.download_button(
-                    label="Download MIDI",
-                    data=midi_bytes,
-                    file_name=midi_name,
-                    mime="audio/midi",
-                )
-else:
-    st.info("Configure the settings in the sidebar and click **Generate**.")

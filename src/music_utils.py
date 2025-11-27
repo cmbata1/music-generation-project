@@ -1,7 +1,10 @@
+import io
 import numpy as np
 import torch
 import pretty_midi
+import scipy.io.wavfile as wavfile
 from IPython.display import Audio, display
+from pathlib import Path
 
 # ------------------------------------------------------
 # Duration bucket mapping
@@ -101,7 +104,7 @@ def tokens_to_pretty_midi(token_ids, id_to_token, out_path, program=0):
 
 
 # ------------------------------------------------------
-# Playback
+# Play MIDI
 # ------------------------------------------------------
 def play_midi(path):
     """
@@ -115,10 +118,85 @@ def play_midi(path):
     except Exception as e:
         print("Could not synthesize audio:", e)
         return None
+    
+
+# ------------------------------------------------------
+# Convert MIDI to WAV for Browser Playback
+# ------------------------------------------------------
+def midi_to_wav_bytes(midi_path, fs: int = 44100) -> bytes:
+    """
+    Load a MIDI file, synthesize audio with pretty_midi, and return WAV bytes.
+    """
+    pm = pretty_midi.PrettyMIDI(str(midi_path))
+    audio = pm.synthesize(fs=fs)  # float32 in [-1, 1]
+
+    # Convert to 16-bit PCM WAV in memory
+    buf = io.BytesIO()
+    wavfile.write(buf, fs, (audio * 32767).astype(np.int16))
+    buf.seek(0)
+    return buf.read()
+
+# ------------------------------------------------------
+# Convert Single Notes to WAV for Browser Playback
+# ------------------------------------------------------
+
+def single_note_to_wav_bytes(pitch: int, duration: float = 0.5,
+                             fs: int = 44100, velocity: int = 80) -> bytes:
+    """
+    Synthesize a single note (pitch, duration) to WAV bytes.
+    """
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=0)
+
+    note = pretty_midi.Note(
+        velocity=velocity,
+        pitch=pitch,
+        start=0.0,
+        end=duration,
+    )
+    inst.notes.append(note)
+    pm.instruments.append(inst)
+
+    audio = pm.synthesize(fs=fs)
+    buf = io.BytesIO()
+    wavfile.write(buf, fs, (audio * 32767).astype(np.int16))
+    buf.seek(0)
+    return buf.read()
+
+# ------------------------------------------------------
+# Convert Seed Sequence to WAV for Browser Playback
+# ------------------------------------------------------
+def seed_to_wav_bytes(seed_notes, fs: int = 44100, velocity: int = 80) -> bytes:
+    """
+    Given a list of (pitch, bucket) pairs, synthesize the whole seed
+    using BUCKET_TO_SECONDS for durations, and return WAV bytes.
+    """
+    pm = pretty_midi.PrettyMIDI()
+    inst = pretty_midi.Instrument(program=0)
+
+    current_time = 0.0
+    for pitch, bucket in seed_notes:
+        duration = BUCKET_TO_SECONDS.get(bucket, 0.5)
+        note = pretty_midi.Note(
+            velocity=velocity,
+            pitch=int(pitch),
+            start=current_time,
+            end=current_time + duration,
+        )
+        inst.notes.append(note)
+        current_time += duration
+
+    pm.instruments.append(inst)
+    audio = pm.synthesize(fs=fs)
+
+    buf = io.BytesIO()
+    wavfile.write(buf, fs, (audio * 32767).astype(np.int16))
+    buf.seek(0)
+    return buf.read()
 
 
 # ------------------------------------------------------
-# Multi-temperature generation helper (optional)
+# Multi-temperature generation helper
 # ------------------------------------------------------
 def generate_and_play_for_temperatures(
     model,
