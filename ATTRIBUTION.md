@@ -24,9 +24,9 @@ or
 ## 2. File-by-File AI Attribution
 Below is a complete list of modules and functions that were fully AI-generated, categorized by file.
 
-A. `src/utils.py`
+### A. `src/utils.py`
 
-This file contains helper functions that were fully AI-generated: 
+This file contains helper functions that were fully AI-generated. Each function is annoted inline.
 
 *   build_id_to_token(...)
 *   build_token_to_id(...)
@@ -39,38 +39,38 @@ This file contains helper functions that were fully AI-generated:
 *   generate_and_play_for_temperatures(...)
 *   render_generated_sample(...)
 
-  Each function is also annotated inline.
-
-B. `src/tabs/dataset_tab.py`
+### B. `src/tabs/dataset_tab.py`
 *   render_dataset_tab(...)
 
-C. `src/tabs/piano_tab.py`
+### C. `src/tabs/piano_tab.py`
 *   render_piano_tab(...)
 
-D. `src/tabs/preset_tab.py`
+### D. `src/tabs/preset_tab.py`
 *   render_preset_tab(...)
 
-E. `notebooks/01_preprocessing.ipynb`
+### E. `notebooks/01_preprocessing.ipynb`
 
-This file contains code cells for preparing the Kaggle dataset that were fully AI-generated.
+This notebook contains preprocessing helpers that were fully AI-generated.
+All code cells containing AI-generated code are annotated in-notebook.
 
-The following functions in this file were fully AI-generated:
+Functions:
 *   choose_melody_instrument(...)
 *   duration_to_bucket(...)
 *   notes_to_tokens(...)
 
-The following non-function code blocks were fully AI-generated and are marked with block-level inline attribution:
+Additional AI-generated non-function code blocks (annotated in-notebook):
 *   Vocabulary construction
-*   Dataset construction (X, y)
+*   Dataset construction (`X`, `y`)
 
 
 ## 3. Dataset Attribution
 
 This project uses one external dataset:
-* **“midi_classic_music”** — by **Bohdan Fedorak**  
-  **Source:** https://www.kaggle.com/datasets/blanderbuss/midi-classic-music  
-  **License:** Publicly available via Kaggle  
-  **Usage:** MIDI files were preprocessed into token sequences for training the GRU model.
+* **`midi_classic_music`** — by **Bohdan Fedorak**  
+  - **Source:** https://www.kaggle.com/datasets/blanderbuss/midi-classic-music  
+  - **License:** Publicly available via Kaggle  
+  - **Usage:** MIDI files were preprocessed into token sequences for training the GRU model.
+
 
  
 
