@@ -1,3 +1,5 @@
+# NOTE: This file contains AI-generated code (ChatGPT).
+
 from pathlib import Path
 
 import numpy as np
@@ -9,7 +11,7 @@ from utils import (
     seed_to_wav_bytes,
 )
 
-
+# AI-generated via ChatGPT
 def render_preset_tab(
     model,
     device,

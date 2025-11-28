@@ -15,10 +15,10 @@ from tabs.piano_tab import render_piano_tab
 from tabs.preset_tab import render_preset_tab
 
 # -------------------------------------------------------------------
-# Paths (relative to this file → project root)
+# Paths
 # -------------------------------------------------------------------
-APP_DIR = Path(__file__).resolve().parent          # .../src
-BASE_DIR = APP_DIR.parent                          # project root
+APP_DIR = Path(__file__).resolve().parent 
+BASE_DIR = APP_DIR.parent                         
 
 CHECKPOINT_PATH = BASE_DIR / "models" / "music_gru_checkpoint.pt"
 FULL_SEQS_PATH = BASE_DIR / "data" / "processed" / "full_sequences.npz"
@@ -103,13 +103,15 @@ if "custom_seed_notes" not in st.session_state:
     st.session_state.custom_seed_notes = []  # list of (pitch, bucket)
 
 # -------------------------------------------------------------------
-# Tabs
+# Tabs via a horizontal radio
 # -------------------------------------------------------------------
-tab1, tab2, tab3 = st.tabs(
-    ["Seed from dataset", "Custom seed (piano)", "Preset melodies"]
+mode = st.radio(
+    "Select view",
+    ["Seed from dataset", "Custom seed (piano)", "Preset melodies"],
+    horizontal=True,
 )
 
-with tab1:
+if mode == "Seed from dataset":
     render_dataset_tab(
         model=model,
         device=DEVICE,
@@ -122,7 +124,7 @@ with tab1:
         generated_dir=GENERATED_DIR,
     )
 
-with tab2:
+elif mode == "Custom seed (piano)":
     render_piano_tab(
         model=model,
         device=DEVICE,
@@ -135,7 +137,7 @@ with tab2:
         generated_dir=GENERATED_DIR,
     )
 
-with tab3:
+else:  
     render_preset_tab(
         model=model,
         device=DEVICE,
@@ -147,4 +149,5 @@ with tab3:
         base_name=base_name,
         generated_dir=GENERATED_DIR,
     )
+
 

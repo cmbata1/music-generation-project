@@ -1,3 +1,5 @@
+# NOTE: This file contains AI-generated code (ChatGPT).
+
 from pathlib import Path
 
 import numpy as np
@@ -8,6 +10,7 @@ from utils import (
     render_generated_sample,
 )
 
+# AI-generated via ChatGPT
 def render_dataset_tab(
     model,
     device,

@@ -1,3 +1,5 @@
+# NOTE: This file contains AI-generated code (ChatGPT).
+
 import io
 from typing import Optional
 import numpy as np
@@ -22,6 +24,7 @@ BUCKET_TO_SECONDS = {
 # ------------------------------------------------------
 # Vocab / token mapping helpers
 # ------------------------------------------------------
+# AI-generated via ChatGPT
 def build_id_to_token(vocab):
     """
     Given a vocab array of shape (vocab_size, 2) containing [pitch, bucket],
@@ -44,6 +47,7 @@ def build_token_to_id(id_to_token):
 # ------------------------------------------------------
 # Generation function
 # ------------------------------------------------------
+# AI-generated via ChatGPT
 def generate_tokens(model, seed_seq, seq_len, num_tokens=300, temperature=1.0, device="cpu"):
     """
     Generate a sequence of token IDs by repeatedly predicting the next token.
@@ -75,6 +79,7 @@ def generate_tokens(model, seed_seq, seq_len, num_tokens=300, temperature=1.0, d
 # ------------------------------------------------------
 # MIDI conversion
 # ------------------------------------------------------
+# AI-generated via ChatGPT
 def tokens_to_pretty_midi(token_ids, id_to_token, out_path, program=0):
     """
     Convert token IDs into a MIDI file and save it.
@@ -108,6 +113,7 @@ def tokens_to_pretty_midi(token_ids, id_to_token, out_path, program=0):
 # ------------------------------------------------------
 # Play MIDI
 # ------------------------------------------------------
+# AI-generated via ChatGPT
 def play_midi(path):
     """
     Synthesize audio using pretty_midi.synthesize()
@@ -125,6 +131,7 @@ def play_midi(path):
 # ------------------------------------------------------
 # Convert MIDI to WAV for Browser Playback
 # ------------------------------------------------------
+# AI-generated via ChatGPT
 def midi_to_wav_bytes(midi_path, fs: int = 44100) -> bytes:
     """
     Load a MIDI file, synthesize audio with pretty_midi, and return WAV bytes.
@@ -141,7 +148,7 @@ def midi_to_wav_bytes(midi_path, fs: int = 44100) -> bytes:
 # ------------------------------------------------------
 # Convert Single Notes to WAV for Browser Playback
 # ------------------------------------------------------
-
+# AI-generated via ChatGPT
 def single_note_to_wav_bytes(pitch: int, duration: float = 0.5,
                              fs: int = 44100, velocity: int = 80) -> bytes:
     """
@@ -168,6 +175,7 @@ def single_note_to_wav_bytes(pitch: int, duration: float = 0.5,
 # ------------------------------------------------------
 # Convert Seed Sequence to WAV for Browser Playback
 # ------------------------------------------------------
+# AI-generated via ChatGPT
 def seed_to_wav_bytes(seed_notes, fs: int = 44100, velocity: int = 80) -> bytes:
     """
     Given a list of (pitch, bucket) pairs, synthesize the whole seed
@@ -200,6 +208,7 @@ def seed_to_wav_bytes(seed_notes, fs: int = 44100, velocity: int = 80) -> bytes:
 # ------------------------------------------------------
 # Multi-temperature generation helper
 # ------------------------------------------------------
+# AI-generated via ChatGPT
 def generate_and_play_for_temperatures(
     model,
     X_ids,
@@ -258,6 +267,7 @@ def generate_and_play_for_temperatures(
 # ------------------------------------------------------
 # Generate an audio preview of token IDs 
 # ------------------------------------------------------
+# AI-generated via ChatGPT
 def render_generated_sample(
     gen_ids,
     id_to_token,
