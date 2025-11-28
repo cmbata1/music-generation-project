@@ -24,4 +24,4 @@ From the project root:
 streamlit run src/app.py
 ```
 
-For training instructions and full environment setup, see setup.md.
+For training instructions and full environment setup, see SETUP.md.
