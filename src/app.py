@@ -25,6 +25,13 @@ FULL_SEQS_PATH = BASE_DIR / "data" / "processed" / "full_sequences.npz"
 GENERATED_DIR = BASE_DIR / "generated"
 GENERATED_DIR.mkdir(exist_ok=True)
 
+if not FULL_SEQS_PATH.exists():
+    st.error(
+        "Missing required dataset file: `data/processed/full_sequences.npz`.\n\n"
+        "Please download it using the link in SETUP.md and place it in the correct folder."
+    )
+    st.stop()
+
 # -------------------------------------------------------------------
 # Device selection
 # -------------------------------------------------------------------

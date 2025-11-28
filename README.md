@@ -7,19 +7,28 @@ This project generates short musical melodies using a GRU-based neural network t
 ## Quick Start
 All commands below assume you are in the project root directory.
 
-1. Clone the repository
+### 1. Clone the repository
 ```
 git clone https://github.com/cmbata1/music-generation-project.git
 cd music-generation-project
 ```
 
-2. Install dependencies
+### 2. Install dependencies
 ```
 pip install -r requirements.txt
 ```
 
-3. Run the Streamlit app
-From the project root:
+### 3. Download the processed dataset
+
+    The Streamlit app cannot run without the processed sequence file. Download the dataset using the link [here](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ).
+    
+    Then, move the downloaded file into:
+    `data/processed/` 
+
+    So the full path becomes:
+    -   `data/processed/full_sequences.npz`
+
+### 4. Run the Streamlit app from the project root:
 ```
 streamlit run src/app.py
 ```
@@ -63,4 +72,4 @@ Comparison:
 More detailed investigation of model behavior under edge-cases (repeated-note, single-token, and random seeds) is provided in the 03_generation.ipynb notebook, including pitch–vs–step plots and discussion of stability, drift, and recovery patterns.
 
 ### Individual Contributions
-This project was completely individually.
+This project was completed individually.
