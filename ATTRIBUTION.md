@@ -26,7 +26,7 @@ Below is a complete list of modules and functions that were fully AI-generated, 
 
 A. `src/utils.py`
 
-This file contains helper functions that were fully AI-generated. Each function is annotated inline:
+This file contains helper functions that were fully AI-generated: 
 
 *   build_id_to_token(...)
 *   build_token_to_id(...)
@@ -38,6 +38,8 @@ This file contains helper functions that were fully AI-generated. Each function 
 *   seed_to_wav_bytes(...)
 *   generate_and_play_for_temperatures(...)
 *   render_generated_sample(...)
+
+  Each function is also annotated inline.
 
 B. `src/tabs/dataset_tab.py`
 *   render_dataset_tab(...)
@@ -70,9 +72,4 @@ This project uses one external dataset:
   Source: https://www.kaggle.com/datasets/blanderbuss/midi-classic-music  
   License: Publicly available via Kaggle  
   Usage: The MIDI files were preprocessed into token sequences for training the GRU model.  
-  All preprocessing steps were performed by the student, using some AI-generated helper functions as listed above.
-
-No other external datasets or data sources were used.
-
-I confirm that all fully AI-generated code is clearly annotated inline and listed in this document. All remaining code was authored by me, with AI assistance limited to debugging, clarification, or minor refinement.
 
