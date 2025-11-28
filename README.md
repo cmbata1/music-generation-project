@@ -13,12 +13,12 @@ git clone https://github.com/cmbata1/music-generation-project.git
 cd music-generation-project
 ```
 
-3. Install dependencies
+2. Install dependencies
 ```
 pip install -r requirements.txt
 ```
 
-5. Run the Streamlit app
+3. Run the Streamlit app
 From the project root:
 ```
 streamlit run src/app.py
