@@ -68,7 +68,7 @@ The following non-function code blocks were fully AI-generated and are marked wi
 
 This project uses one external dataset:
 
-* **“MIDI Classic Music”** by blanderbuss  
+* **“MIDI Classic Music”** by Bohdan Fedorak 
   Source: https://www.kaggle.com/datasets/blanderbuss/midi-classic-music  
   License: Publicly available via Kaggle  
   Usage: The MIDI files were preprocessed into token sequences for training the GRU model.  
