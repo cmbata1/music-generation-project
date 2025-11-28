@@ -22,13 +22,12 @@ or
 ```
 
 ## 2. File-by-File AI Attribution
-Below is a complete list of all modules and functions that were fully AI-generated.
+Below is a complete list of modules and functions that were fully AI-generated, categorized by file.
 
 A. `src/utils.py`
 
-This file contains helper functions that were fully AI-generated. Each function is annotated inline.
+This file contains helper functions that were fully AI-generated. Each function is annotated inline:
 
-The following functions in this file were fully AI-generated:
 *   build_id_to_token(...)
 *   build_token_to_id(...)
 *   generate_tokens(...)
@@ -50,6 +49,7 @@ D. `src/tabs/preset_tab.py`
 *   render_preset_tab(...)
 
 E. `notebooks/01_preprocessing.ipynb`
+
 This file contains code cells for preparing the Kaggle dataset that were fully AI-generated.
 
 The following functions in this file were fully AI-generated:
