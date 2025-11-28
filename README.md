@@ -37,9 +37,9 @@ Final metrics:
 -   Validation loss: `2.94`
 -   Final perplexity: `5.21`
 
-Loss decreased smoothly over training, and validation loss tracked closely without diverging, indicating that the model generalized reasonably well to unseen sequences.
+Loss decreased smoothly over training. Validation loss also decreased without significant divergence, indicating that the model generalized reasonably well to unseen sequences.
 
-Training and validation loss curves:
+Training and validation loss and accuracy curves:
 ![Loss Curves](images/loss-curves.png)
 
 ### Qualitative Results
