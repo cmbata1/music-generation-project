@@ -8,13 +8,15 @@ This project generates short musical melodies using a GRU-based neural network t
 All commands below assume you are in the project root directory.
 
 1. Clone the repository
-   ```git clone https://github.com/cmbata1/music-generation-project.git
-    cd music-generation-project```
+   ```
+   git clone https://github.com/cmbata1/music-generation-project.git
+   cd music-generation-project
+   ```
 
-2. Install dependencies
+3. Install dependencies
 ```pip install -r requirements.txt```
 
-3. Run the Streamlist app
+4. Run the Streamlist app
 From the project root:
 ```streamlit run src/app.py```
 
