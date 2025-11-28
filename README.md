@@ -14,10 +14,14 @@ All commands below assume you are in the project root directory.
    ```
 
 3. Install dependencies
-```pip install -r requirements.txt```
+```
+pip install -r requirements.txt
+```
 
-4. Run the Streamlist app
+5. Run the Streamlist app
 From the project root:
-```streamlit run src/app.py```
+```
+streamlit run src/app.py
+```
 
 For training instructions and full environment setup, see setup.md.
