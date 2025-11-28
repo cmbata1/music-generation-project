@@ -1,8 +1,10 @@
 import io
+from typing import Optional
 import numpy as np
 import torch
 import pretty_midi
 import scipy.io.wavfile as wavfile
+import streamlit as st
 from IPython.display import Audio, display
 from pathlib import Path
 
@@ -40,7 +42,7 @@ def build_token_to_id(id_to_token):
 
 
 # ------------------------------------------------------
-# Generation
+# Generation function
 # ------------------------------------------------------
 def generate_tokens(model, seed_seq, seq_len, num_tokens=300, temperature=1.0, device="cpu"):
     """
@@ -209,6 +211,7 @@ def generate_and_play_for_temperatures(
     use_random_seed=True,
     seed_index=None,
     device="cpu",
+    generated_dir: Optional[Path] = None,
 ):
     """
     Generate continuation at several temperatures.
@@ -224,6 +227,9 @@ def generate_and_play_for_temperatures(
 
     results = {}
 
+    if generated_dir is not None:
+        generated_dir.mkdir(parents=True, exist_ok=True)
+
     for temp in temps:
         gen_ids = generate_tokens(
             model,
@@ -234,8 +240,12 @@ def generate_and_play_for_temperatures(
             device=device,
         )
 
-        out_path = f"{base_name}_T{temp:.2f}.mid"
-        tokens_to_pretty_midi(gen_ids, id_to_token, out_path)
+        if generated_dir is not None:
+            out_path = generated_dir / f"{base_name}_T{temp:.2f}.mid"
+        else:
+            out_path = Path(f"{base_name}_T{temp:.2f}.mid")
+        
+        tokens_to_pretty_midi(gen_ids, id_to_token, str(out_path))
 
         audio_widget = play_midi(out_path)
         if audio_widget is not None:
@@ -244,3 +254,34 @@ def generate_and_play_for_temperatures(
         results[temp] = out_path
 
     return results
+
+# ------------------------------------------------------
+# Generate an audio preview of token IDs 
+# ------------------------------------------------------
+def render_generated_sample(
+    gen_ids,
+    id_to_token,
+    generated_dir: Path,
+    midi_name: str,
+    download_key: str,
+):
+    """
+    Convert generated token IDs into a MIDI file, produce a WAV preview,
+    and display both an audio player and a MIDI download button in Streamlit.
+    """
+    generated_dir.mkdir(parents=True, exist_ok=True)
+
+    midi_path = generated_dir / midi_name
+    tokens_to_pretty_midi(gen_ids, id_to_token, str(midi_path))
+
+    midi_bytes = midi_path.read_bytes()
+    wav_bytes = midi_to_wav_bytes(midi_path)
+
+    st.audio(wav_bytes, format="audio/wav")
+    st.download_button(
+        "Download MIDI",
+        midi_bytes,
+        file_name=midi_name,
+        mime="audio/midi",
+        key=download_key,
+    )

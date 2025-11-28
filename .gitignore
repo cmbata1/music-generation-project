@@ -6,3 +6,4 @@ classic-midi-files-raw/
 data/processed/
 models/
 data/.DS_Store
+generated/

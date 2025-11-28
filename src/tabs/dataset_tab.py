@@ -3,17 +3,10 @@ from pathlib import Path
 import numpy as np
 import streamlit as st
 
-from music_utils import (
+from utils import (
     generate_tokens,
-    tokens_to_pretty_midi,
-    midi_to_wav_bytes,
+    render_generated_sample,
 )
-
-
-def _read_file_bytes(path: Path) -> bytes:
-    with path.open("rb") as f:
-        return f.read()
-
 
 def render_dataset_tab(
     model,
@@ -83,19 +76,12 @@ def render_dataset_tab(
                 device=device,
             )
 
-            # Save to MIDI
             midi_name = f"{base_name}_seed{idx}_T{temp:.2f}.mid"
-            midi_path = generated_dir / midi_name
-            tokens_to_pretty_midi(gen_ids, id_to_token, str(midi_path))
-
-            # MIDI bytes for download, WAV for playback
-            midi_bytes = _read_file_bytes(midi_path)
-            wav_bytes = midi_to_wav_bytes(midi_path)
-
-            st.audio(wav_bytes, format="audio/wav")
-            st.download_button(
-                label="Download MIDI",
-                data=midi_bytes,
-                file_name=midi_name,
-                mime="audio/midi",
+            render_generated_sample(
+                gen_ids=gen_ids,
+                id_to_token=id_to_token,
+                generated_dir=generated_dir,
+                midi_name=midi_name,
+                download_key=f"dataset_download_{temp}",
             )
+

@@ -1,5 +1,3 @@
-# src/app.py
-
 from pathlib import Path
 
 import numpy as np
@@ -7,7 +5,7 @@ import torch
 import streamlit as st
 
 from model import load_trained_model
-from music_utils import (
+from utils import (
     build_id_to_token,
     build_token_to_id,
 )
@@ -22,7 +20,7 @@ from tabs.preset_tab import render_preset_tab
 APP_DIR = Path(__file__).resolve().parent          # .../src
 BASE_DIR = APP_DIR.parent                          # project root
 
-CHECKPOINT_PATH = BASE_DIR / "checkpoints" / "music_gru_checkpoint.pt"
+CHECKPOINT_PATH = BASE_DIR / "models" / "music_gru_checkpoint.pt"
 FULL_SEQS_PATH = BASE_DIR / "data" / "processed" / "full_sequences.npz"
 GENERATED_DIR = BASE_DIR / "generated"
 GENERATED_DIR.mkdir(exist_ok=True)
