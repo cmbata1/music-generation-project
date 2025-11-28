@@ -8,10 +8,10 @@ This project generates short musical melodies using a GRU-based neural network t
 All commands below assume you are in the project root directory.
 
 1. Clone the repository
-   ```
-   git clone https://github.com/cmbata1/music-generation-project.git
-   cd music-generation-project
-   ```
+```
+git clone https://github.com/cmbata1/music-generation-project.git
+cd music-generation-project
+```
 
 3. Install dependencies
 ```
