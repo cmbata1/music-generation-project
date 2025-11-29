@@ -1,13 +1,10 @@
-# download_data.py
 import os
 import gdown
 
-# Google Drive share link (replace with your actual link)
-url = "https://drive.google.com/uc?id=YOUR_FILE_ID"
+url = "https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ"
 output_dir = "data/processed"
 output_file = os.path.join(output_dir, "full_sequences.npz")
 
-# Make sure the folder exists
 os.makedirs(output_dir, exist_ok=True)
 
 print(f"Downloading dataset to {output_file}...")
