@@ -4,7 +4,7 @@ This document provides installation and setup instructions for running the music
 
 ## Requirements
 
-- Python 3.10+ (the project was tested on Python 3.11)
+- Python 3.12 (this is the version the project was developed and tested on)
 - pip for installing dependencies
 - (Recommended) virtual environment (`venv` or `conda`)
 
