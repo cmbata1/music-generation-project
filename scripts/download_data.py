@@ -1,7 +1,7 @@
 import os
 import gdown
 
-url = "https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ"
+url = "https://drive.google.com/uc?export=download&id=1429pDRYHCXQVSgCHpqJdEzHMUDTn5PtU"
 output_dir = "data/processed"
 output_file = os.path.join(output_dir, "full_sequences.npz")
 

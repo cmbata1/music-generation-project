@@ -66,9 +66,9 @@ Additional AI-generated non-function code blocks (annotated in-notebook):
 ## 3. Dataset Attribution
 
 This project uses one external dataset:
-* **`midi_classic_music`** — by **Bohdan Fedorak**  
-  - **Source:** https://www.kaggle.com/datasets/blanderbuss/midi-classic-music  
-  - **License:** Publicly available via Kaggle  
+* **`midi-classical-music`** — by **drengskapur**  
+  - **Source:** https://huggingface.co/datasets/drengskapur/midi-classical-music 
+  - **License:** MIT 
   - **Usage:** MIDI files were preprocessed into token sequences for training the GRU model.
 
 

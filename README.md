@@ -42,7 +42,7 @@ Run the helper script to download automatically into the correct folder:
 python3 scripts/download_data.py
 ```
 #### Option B: Manual
-1. Download `full_sequences.npz` from [Google Drive](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ).
+1. Download `full_sequences.npz` from [Google Drive](https://drive.google.com/uc?export=download&id=1429pDRYHCXQVSgCHpqJdEzHMUDTn5PtU).
 2. Place it in `data/processed/` (create the folder if needed).
 
 ### 5. Run the Streamlit app from the project root:
@@ -58,23 +58,23 @@ For training instructions and full environment setup, see SETUP.md.
 
 ### Model Configurations (Summary)
 I trained three GRU architectures:
-- **small_GRU (64, 128)** — validation accuracy ~24%
-- **medium_GRU (64, 192)** — validation accuracy ~25.5%, chosen for qualitative demos and stability
-- **bigger_GRU (128, 256)** — validation accuracy ~26%, best quantitative performance but heavier runtime
+- **small_GRU (64, 128)** — validation accuracy ~25%
+- **medium_GRU (64, 192)** — validation accuracy ~26%, selected for demos due to stable training behavior
+- **bigger_GRU (128, 256)** — validation accuracy ~26%, no meaningful improvement from the medium GRU
 
 All models used a single GRU layer, dropout=0.3, Adam optimizer (`lr=1e-3`, `weight_decay=1e-5`), and the same train/validation split.
 
 ---
 
 ### Baselines vs GRU Models
-Naïve baselines achieve ~3–4% accuracy.  
+Last-token and most-frequent baselines achieve ~3–4% accuracy.  
 GRU models outperform by a wide margin:
 
 | Model       | Validation Accuracy | Test Accuracy |
 |-------------|---------------------|---------------|
-| small_GRU   | 0.24                | —             |
-| medium_GRU  | 0.26                | 0.28          |
-| bigger_GRU  | 0.275               | —             |
+| small_GRU   | 0.25                | —             |
+| medium_GRU  | 0.26                | 0.27          |
+| bigger_GRU  | 0.26               | —             |
 
 The medium GRU generalizes well on a held‑out test set, confirming stability beyond validation.
 
@@ -92,21 +92,21 @@ The medium GRU generalizes well on a held‑out test set, confirming stability b
 <summary>Detailed Metrics & Plots</summary>
 
 #### Hyperparameter Tuning
-| Config      | embed_dim | hidden_dim | Val Loss | Perplexity | Val Acc |
-|-------------|-----------|------------|----------|------------|---------|
-| small_GRU   | 64        | 128        | 2.98     | 19.77      | 0.24    |
-| bigger_GRU  | 128       | 256        | 2.93     | 18.86      | 0.26    |
+| Config      | embed_dim | hidden_dim |
+|-------------|-----------|------------|
+| small_GRU   | 64        | 128        |
+| bigger_GRU  | 128       | 256        |
 
 #### Quantitative Results
 | Model       | Validation Loss | Perplexity | Accuracy |
 |-------------|-----------------|------------|----------|
-| small_GRU   | 2.98            | 19.77      | 0.24     |
-| bigger_GRU  | 2.93            | 18.86      | 0.26     |
+| small_GRU   | 2.92           | 18.49      | 0.24     |
+| bigger_GRU  | 2.89            | 18.08      | 0.26     |
 
 #### Test Set Evaluation (medium GRU)
-- Test loss: 2.86  
-- Test perplexity: 17.52  
-- Test accuracy: 0.28  
+- Test loss: 2.85  
+- Test perplexity: 17.37 
+- Test accuracy: 0.27  
 
 #### Plots
 ![Loss Curves](images/loss-curves.png)  
@@ -116,7 +116,7 @@ The medium GRU generalizes well on a held‑out test set, confirming stability b
 </details>
 
 ### Additional Analysis
-See notebooks/03_generation.ipynb for edge‑case behavior (repeated‑note, single‑token, random seeds).
+See notebooks/02_training for detailed training logs and model analysis. See notebooks/03_generation.ipynb for edge‑case behavior (repeated‑note, single‑token, random seeds).
 
 ### Individual Contributions
 This project was completed individually.

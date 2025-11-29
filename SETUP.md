@@ -42,7 +42,7 @@ Run the helper script to download automatically into the correct folder:
 python scripts/download_data.py
 ```
 #### Option B: Manual
-1. Download `full_sequences.npz` from [Google Drive](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ).
+1. Download `full_sequences.npz` from [Google Drive](https://drive.google.com/uc?export=download&id=1429pDRYHCXQVSgCHpqJdEzHMUDTn5PtU).
 2. Place it in `data/processed/` (create the folder if needed).
 
 This file is **required** for the Streamlit app.

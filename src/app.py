@@ -54,8 +54,8 @@ st.title("🎵 GRU Music Generator")
 st.caption(f"Running on: **{device_label}**")
 st.write(
     "This app showcases a GRU-based music generation model. "
-    "You can either seed the model with an existing sequence from the dataset, "
-    "or build a custom melody using a piano-style interface."
+    "You can generate music by selecting a preset melody seed, building a custom seed using a piano-style interface, "
+    "or using an existing sequence from the dataset."
 )
 
 # -------------------------------------------------------------------
@@ -114,7 +114,7 @@ if "custom_seed_notes" not in st.session_state:
 # -------------------------------------------------------------------
 mode = st.radio(
     "Select view",
-    ["Seed from dataset", "Custom seed (piano)", "Preset melodies"],
+    ["Preset melodies", "Custom seed (piano)", "Seed from dataset"],
     horizontal=True,
 )
 
