@@ -34,7 +34,7 @@ pip install --upgrade -r requirements.txt
 ```
 
 ## 3. Download the Processed Dataset
-The file `data/processed/full_sequences.npz` is too large to store directly in GitHub.
+The processed dataset file `data/processed/full_sequences.npz` is too large to store directly in GitHub and must be downloaded from Google Drive.
 
 #### Option A: Script
 Run the helper script to download automatically into the correct folder:
