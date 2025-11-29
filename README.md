@@ -2,32 +2,42 @@
 A sequence-modeling project that generates short musical melodies from either preset motifs or user-defined seeds.
 
 ## What it Does
-This project generates short musical melodies using a GRU-based neural network trained on tokenized, monophonic MIDI files drawn from a classical music dataset. The system produces new music by continuing from an initial seed sequence, which can come from the dataset, from preset melodies, or from user-provided custom notes. The model aims to produce sequences where token values evolve smoothly rather than jumping abruptly, reflecting musically plausible movement in pitch and timing. An interactive Streamlit interface allows users to choose a seed type, generate music, and listen to their output.
+This project generates short musical melodies using a GRU-based neural network trained on tokenized, monophonic MIDI files drawn from a classical music dataset. The system produces new music by continuing from an initial seed sequence, which can come from the dataset, from preset melodies, or from user-provided custom notes. The model aims to produce sequences where token values evolve smoothly and reflect musically plausible movement in pitch and timing. An interactive Streamlit app allows users to choose a seed type, generate music, and listen to their output.
 
 ## Quick Start
 All commands below assume you are in the project root directory.
+### Prerequisites
+- Python 3.10+ (tested on 3.11)
+- pip installed
+- (Recommended) virtual environment
 
 ### 1. Clone the repository
-```
+```bash
 git clone https://github.com/cmbata1/music-generation-project.git
 cd music-generation-project
 ```
 
-### 2. Install dependencies
+### 2. Create and activate a virtual environment (recommended)
+```bash
+python3 -m venv venv
+source venv/bin/activate      # macOS / Linux
+# or
+.\venv\Scripts\activate       # Windows PowerShell
 ```
+
+### 3. Install dependencies
+```bash
 pip install -r requirements.txt
 ```
 
-### 3. Download the processed dataset
+### 4. Download the processed dataset
+The Streamlit app cannot run without the processed sequence file.
 
-The Streamlit app cannot run without the processed sequence file. Download the dataset using the link [here](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ).
+Download [full_sequences.npz](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ).
     
-Then, move the downloaded file into:
-    `data/processed/` 
+Place it in `data/processed/` (create the folder if needed)
 
-So the full path to the file becomes: `data/processed/full_sequences.npz`
-
-### 4. Run the Streamlit app from the project root:
+### 5. Run the Streamlit app from the project root:
 ```
 streamlit run src/app.py
 ```
@@ -37,38 +47,95 @@ For training instructions and full environment setup, see SETUP.md.
 ## Video Links
 
 ## Evaluation
+### Model Configurations
+
+I trained several GRU architectures during development:
+
+- **Medium GRU (64, 192)** — trained for 10 epochs; used to verify training stability and to produce qualitative samples.
+- **small_GRU (64, 128)** — trained for 6 epochs; used for hyperparameter comparison.
+- **bigger_GRU (128, 256)** — trained for 6 epochs; achieved the best validation performance and serves as the primary quantitative model.
+
+All models use a single GRU layer with dropout of 0.3, Adam optimization (`lr=1e-3`, `weight_decay=1e-5`), and the same train/validation split.
+
+---
+
+### Hyperparameter Tuning
+
+To compare model capacity, two GRU configurations were trained on the same train/validation split:
+
+| Config      | embed_dim | hidden_dim | Val Loss | Perplexity | Val Acc |
+|-------------|-----------|------------|----------|------------|---------|
+| small_GRU   | 64        | 128        | 2.98     | 19.77      | 0.24    |
+| bigger_GRU  | 128       | 256        | 2.93     | 18.86      | 0.26    |
+
+The larger GRU consistently achieved lower validation loss and perplexity, as well as higher accuracy, so it serves as the primary model for quantitative evaluation.
+
+---
+
 ### Quantitative Results
-The GRU model was trained as a next-token predictor over tokenized musical sequences, where each token encodes a `(pitch, duration_bucket)` pair.
+To contextualize model performance, two simple baselines were evaluated:
 
-Final metrics:
--   Training loss: `2.72`
--   Validation loss: `2.94`
--   Final perplexity: `5.21`
+| Baseline Method         | Accuracy |
+|-------------------------|----------|
+| Majority-token baseline | 0.03     |
+| Last-token baseline     | 0.03     |
 
-Loss decreased smoothly over training. Validation loss also decreased without significant divergence, indicating that the model generalized reasonably well to unseen sequences.
+Both GRU models outperform these baselines:
 
-Below are the training and validation curves over 10 epochs:
+| Model       | Validation Loss | Perplexity | Accuracy |
+|-------------|------------------|------------|----------|
+| small_GRU   | 2.98             | 19.77      | 0.24     |
+| bigger_GRU  | 2.93             | 18.86      | 0.26     |
+
+The larger GRU achieves lower validation loss, lower perplexity, and higher top-1 accuracy, indicating improved next-token prediction quality.
+
+Below is a representative training and validation loss curve from the medium-sized GRU model trained for 10 epochs. This model was used to verify training stability and to produce qualitative samples.
+
 ![Loss Curves](images/loss-curves.png)
+
+---
+
+### Test Set Evaluation
+
+To assess generalization, the medium GRU model (`embed_dim=64`, `hidden_dim=192`) was evaluated on a held-out test split that was not used during training or hyperparameter tuning.
+
+Baseline performance on the test set:
+
+| Baseline Method         | Accuracy |
+|-------------------------|----------|
+| Majority-token baseline | 0.04     |
+| Last-token baseline     | 0.04     |
+
+Model performance:
+
+- Test loss: 2.86  
+- Test perplexity: 17.52  
+- Test accuracy: 0.28  
+
+These results show that the model continues to outperform naïve baselines by a large margin, even on unseen data. This complements the validation-based comparisons used during model selection and demonstrates that the GRU generalizes beyond the training distribution.
+
+---
 
 ### Qualitative Results
 #### Effect of Sampling Temperature on Musical Structure
-To assess how sampling temperature affects the model’s outputs, sequences were generated using the same seed at two temperatures:
--   T = 0.8 (moderate)
--   T = 1.4 (high)
 
-The pitch-vs-step plots show the progression of the generated sequence over time.
+To qualitatively inspect the model’s behavior, sequences were generated from the medium GRU model trained for 10 epochs using the same seed at two temperatures:
+
+- **T = 0.8** (moderate diversity)  
+- **T = 1.4** (high diversity)
+
+Pitch-vs-step plots show how musical structure evolves over time.
 
 ![Temperature 0.8](images/t-08.png)
-
 ![Temperature 1.4](images/t-14.png)
 
-Comparison:
--   T = 0.8 produces smoother, more stable pitch changes within a narrow range, often moving gradually up or down rather than making large jumps.
--   T = 1.4 leads to frequent large jumps, greater variability, and no consistent structure.
--   Lower temperatures keep sampling near high-probability predictions, while higher temperatures introduce significantly more randomness.
+Observations:
+- **T = 0.8** produces smoother, more locally stable pitch movements.  
+- **T = 1.4** introduces larger jumps and higher variability.  
+- Lower temperatures keep sampling near high-probability predictions, while higher temperatures increase randomness and reduce coherence.
 
 ### Additional Analysis
-A more detailed investigation of model behavior under edge-cases (repeated-note, single-token, and random seeds) is provided in the 03_generation.ipynb notebook, including pitch–vs–step plots and discussion of stability, drift, and recovery patterns.
+See notebooks/03_generation.ipynb for edge‑case behavior (repeated‑note, single‑token, random seeds).
 
 ### Individual Contributions
 This project was completed individually.
