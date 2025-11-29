@@ -4,6 +4,5 @@ raw/
 classic-midi-files-raw/
 .DS_Store/
 data/processed/full_sequences.npz
-models/
 data/.DS_Store
 generated/
