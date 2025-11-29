@@ -7,7 +7,7 @@ This project generates short musical melodies using a GRU-based neural network t
 ## Quick Start
 All commands below assume you are in the project root directory.
 ### Prerequisites
-- Python 3.12 (this is the version the project was developed and tested on)
+- Python 3.9 (this is the version the project was developed and tested on)
 - pip for installing dependencies
 - (Recommended) virtual environment
 
@@ -19,7 +19,7 @@ cd music-generation-project
 
 ### 2. Create and activate a virtual environment (recommended)
 ```bash
-python3.12 -m venv venv
+python3 -m venv venv
 source venv/bin/activate      # macOS / Linux
 # or
 .\venv\Scripts\activate       # Windows PowerShell
