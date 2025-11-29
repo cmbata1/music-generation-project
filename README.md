@@ -2,14 +2,16 @@
 A sequence-modeling project that generates short musical melodies from either preset motifs or user-defined seeds.
 
 ## What it Does
-This project generates short musical melodies using a GRU-based neural network trained on tokenized, monophonic MIDI files drawn from a classical music dataset. The system produces new music by continuing from an initial seed sequence, which can come from the dataset, from preset melodies, or from user-provided custom notes. The model aims to produce sequences where token values evolve smoothly and reflect musically plausible movement in pitch and timing. An interactive Streamlit app allows users to choose a seed type, generate music, and listen to their output.
+This project generates short musical melodies using a GRU‑based neural network trained on classical, monophonic MIDI data. It produces new music by continuing from an initial seed sequence, which can be chosen in three ways: from preset melodies such as the C major scale, *Are You Sleeping*, or *Twinkle Twinkle Little Star*; from random snippets drawn directly from the training dataset; or from custom notes entered through a simple seven‑key piano interface ranging from middle C to B. The model aims to create sequences that evolve smoothly and sound musically plausible in pitch and timing, and an interactive Streamlit app makes it easy to select a seed, generate music, and listen instantly.
+
 
 ## Quick Start
 All commands below assume you are in the project root directory.
 ### Prerequisites
-- Python 3.9 (this is the version the project was developed and tested on)
-- pip for installing dependencies
-- (Recommended) virtual environment
+- **Python 3.9–3.12**  
+  - The project was originally developed with Python 3.9, but has been tested and works with 3.9, 3.10, 3.11, and 3.12.
+- **pip** for installing dependencies
+- (Recommended) a **virtual environment** to keep dependencies isolated
 
 ### 1. Clone the repository
 ```bash
