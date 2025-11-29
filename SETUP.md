@@ -34,14 +34,17 @@ pip install --upgrade -r requirements.txt
 ```
 
 ## 3. Download the Processed Dataset
-The file `data/processed/full_sequences.npz` is too large to store directly in GitHub .
+The file `data/processed/full_sequences.npz` is too large to store directly in GitHub.
 
-Download it here:
-[Google Drive link](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ)
-
-After downloading, place the file inside the `data/processed/` folder. Ensure the folder contains:
--   `full_sequences.npz`
--   `splits_filelevel_indices.npz`
+#### Option A: Script
+Run the helper script to download automatically into the correct folder:
+```bash
+pip install gdown
+python download_data.py
+```
+#### Option B: Manual
+1. Download `full_sequences.npz` from [Google Drive](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ).
+2. Place it in `data/processed/` (create the folder if needed).
 
 This file is **required** for the Streamlit app.
 

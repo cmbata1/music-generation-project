@@ -31,11 +31,18 @@ pip install -r requirements.txt
 ```
 
 ### 4. Download the processed dataset
-The Streamlit app cannot run without the processed sequence file.
 
-Download [full_sequences.npz](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ).
-    
-Place it in `data/processed/` (create the folder if needed)
+The file `data/processed/full_sequences.npz` is too large to store directly in GitHub.
+
+#### Option A: Script
+Run the helper script to download automatically into the correct folder:
+```bash
+pip install gdown
+python download_data.py
+```
+#### Option B: Manual
+1. Download `full_sequences.npz` from [Google Drive](https://drive.google.com/uc?export=download&id=1khv6_3rRCDJ27viPqy3eqDezGD2r02KQ).
+2. Place it in `data/processed/` (create the folder if needed).
 
 ### 5. Run the Streamlit app from the project root:
 ```
