@@ -37,6 +37,7 @@ def build_id_to_token(vocab):
     return id_to_token
 
 
+# AI-generated via ChatGPT
 def build_token_to_id(id_to_token):
     """
     Reverse mapping (pitch, bucket) -> id
