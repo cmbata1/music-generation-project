@@ -3,6 +3,7 @@ from pathlib import Path
 import numpy as np
 import torch
 import streamlit as st
+import requests
 
 from model import load_trained_model
 from utils import (
@@ -25,12 +26,21 @@ FULL_SEQS_PATH = BASE_DIR / "data" / "processed" / "full_sequences.npz"
 GENERATED_DIR = BASE_DIR / "generated"
 GENERATED_DIR.mkdir(exist_ok=True)
 
+DATA_URL = "https://musicgenapp.blob.core.windows.net/datasets/full_sequences.npz"
+
+# Auto-download if missing
 if not FULL_SEQS_PATH.exists():
-    st.error(
-        "Missing required dataset file: `data/processed/full_sequences.npz`.\n\n"
-        "Please download it using the link in SETUP.md and place it in the correct folder."
-    )
-    st.stop()
+    st.warning("Dataset not found locally. Downloading now...")
+    try:
+        response = requests.get(DATA_URL, stream=True)
+        response.raise_for_status()
+        with open(FULL_SEQS_PATH, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+        st.success("Dataset downloaded successfully.")
+    except Exception as e:
+        st.error(f"Failed to download dataset: {e}")
+        st.stop()
 
 # -------------------------------------------------------------------
 # Device selection

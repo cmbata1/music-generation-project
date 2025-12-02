@@ -14,3 +14,4 @@ ipykernel
 gdown>=4.6.6
 datasets>=2.15.0
 huggingface_hub>=0.20.0
+requests>=2.0.0
