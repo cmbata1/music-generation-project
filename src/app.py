@@ -80,7 +80,7 @@ def load_model_and_data():
 model, SEQ_LEN, X_ids, id_to_token, token_to_id = load_model_and_data()
 
 # -------------------------------------------------------------------
-# Sidebar: global generation settings (shared by both tabs)
+# Sidebar: global generation settings (shared by tabs)
 # -------------------------------------------------------------------
 with st.sidebar:
     st.header("Generation Settings")
