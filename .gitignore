@@ -1,7 +1,5 @@
 venv/
 .venv/
-raw/
-classic-midi-files-raw/
 .DS_Store/
 data/processed/full_sequences.npz
 data/.DS_Store
