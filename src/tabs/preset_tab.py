@@ -33,9 +33,6 @@ def render_preset_tab(
     # --- Define presets as sequences of MIDI pitches (no buckets yet) ---
 
     PRESETS = {
-        "C major scale (C4 → C5)": [
-            60, 62, 64, 65, 67, 69, 71, 72
-        ],
         "Twinkle Twinkle Little Star (opening)": [
             60, 60, 67, 67, 69, 69, 67,           # C C G G A A G
             65, 65, 64, 64, 62, 62, 60           # F F E E D D C
@@ -46,6 +43,9 @@ def render_preset_tab(
             64, 65, 67,                          # E F G
             64, 65, 67                           # E F G
         ],
+        "C major scale (C4 → C5)": [
+            60, 62, 64, 65, 67, 69, 71, 72
+        ]
     }
 
     preset_names = list(PRESETS.keys())
