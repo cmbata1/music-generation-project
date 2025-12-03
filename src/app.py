@@ -65,7 +65,6 @@ else:
 st.set_page_config(page_title="Music Generation Demo", layout="wide")
 
 st.title("🎵 GRU Music Generator")
-st.caption(f"Running on: **{device_label}**")
 
 st.write(
     "This app showcases a GRU-based music generation model. "
