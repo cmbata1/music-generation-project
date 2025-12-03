@@ -71,8 +71,14 @@ if FULL_SEQS_PATH.exists():
     # Local / dev: no download
     full_sequences_npz = load_sequences()
 else:
-    with st.spinner("Downloading dataset from cloud storage… this happens only the first time."):
+    with st.status("Loading dataset…", expanded=True) as status:
         full_sequences_npz = load_sequences()
+        status.update(
+            label="Dataset ready ✅",
+            state="complete",
+            expanded=False,
+        )
+
 
 st.write(
     "This app showcases a GRU-based music generation model. "
