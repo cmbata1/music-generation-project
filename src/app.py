@@ -80,7 +80,7 @@ else:
         status.update(
             label="Dataset ready ✓",
             state="complete",
-            expanded=False,
+            expanded=True,
         )
 
 st.write(
