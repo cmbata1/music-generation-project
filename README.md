@@ -6,51 +6,29 @@ This project generates short musical melodies using a GRU‑based neural network
 
 
 ## Quick Start
-All commands below assume you are in the project root directory.
-### Prerequisites
-- **Python 3.9–3.12**  
-  - The project was originally developed with Python 3.9, but has been tested and works with 3.9, 3.10, 3.11, and 3.12.
-- **pip** for installing dependencies
-- (Recommended) a **virtual environment** to keep dependencies isolated
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/cmbata1/music-generation-project.git
-cd music-generation-project
-```
+The easiest way to run this project is through the hosted Streamlit app:
 
-### 2. Create and activate a virtual environment (recommended)
-```bash
-python3 -m venv venv
-source venv/bin/activate      # macOS / Linux
-# or
-.\venv\Scripts\activate       # Windows PowerShell
-```
+ https://musicgen-demo.streamlit.app
 
-### 3. Install dependencies
-```bash
-pip install -r requirements.txt
-```
+This version requires no installation.
 
-### 4. Download the processed dataset
+---
 
-The processed dataset file `data/processed/full_sequences.npz` is too large to store directly in GitHub and must be downloaded from Google Drive.
+### Running Locally (Optional)
 
-#### Option A: Script
-Run the helper script to download automatically into the correct folder:
-```bash
-python3 scripts/download_data.py
-```
-#### Option B: Manual
-1. Download `full_sequences.npz` from [Google Drive](https://drive.google.com/uc?export=download&id=1429pDRYHCXQVSgCHpqJdEzHMUDTn5PtU).
-2. Place it in `data/processed/` (create the folder if needed).
+If you prefer to run the project on your own machine—for development, testing, or deeper exploration—please see:
 
-### 5. Run the Streamlit app from the project root:
-```
-streamlit run src/app.py
-```
+**[`SETUP.md`](./SETUP.md)**
 
-For training instructions and full environment setup, see SETUP.md.
+`SETUP.md` includes:
+
+- Python version requirements  
+- Setting up a virtual environment  
+- Installing dependencies  
+- Downloading the processed dataset (`full_sequences.npz`)  
+- Running the Streamlit app locally  
+- Training instructions and environment notes 
 
 ## Video Links
 

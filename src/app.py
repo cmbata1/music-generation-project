@@ -95,7 +95,7 @@ def load_model_and_data():
     model, seq_len = load_trained_model(CHECKPOINT_PATH, DEVICE)
 
     # Load processed data
-    data = np.load(FULL_SEQS_PATH, allow_pickle=True)
+    data = load_sequences() 
     X_ids = data["X"]
     vocab = data["vocab"]  # shape: (vocab_size, 2) [pitch, bucket]
 
