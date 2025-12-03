@@ -9,7 +9,7 @@ This project generates short musical melodies using a GRU‑based neural network
 
 The easiest way to run this project is through the hosted Streamlit app:
 
- https://musicgen-demo.streamlit.app
+🔗 **Live Streamlit App:**  https://musicgen-demo.streamlit.app
 
 This version requires no installation.
 

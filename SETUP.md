@@ -1,6 +1,10 @@
 # SETUP
 
-This document provides installation and setup instructions for running the music generation project.
+If you prefer not to run the project locally, you can try the hosted application here:
+
+🔗 **Live Streamlit App:**  https://musicgen-demo.streamlit.app
+
+This document provides installation and setup instructions for running the music generation project locally.
 
 ## Requirements
 
