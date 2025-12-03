@@ -37,28 +37,14 @@ DATA_URL = "https://musicgenapp.blob.core.windows.net/datasets/full_sequences.np
 def load_sequences():
     """Load full_sequences.npz (local-first, blob fallback)."""
     
-    # 1) Local fast path (dev or previously saved)
     if FULL_SEQS_PATH.exists():
         return np.load(FULL_SEQS_PATH, allow_pickle=True)
 
-    # 2) Blob fallback with UI
-    with st.status(
-        "Downloading dataset from cloud storage…", 
-        expanded=True
-    ) as status:
-        resp = requests.get(DATA_URL, stream=True)
-        resp.raise_for_status()
+    resp = requests.get(DATA_URL, stream=True)
+    resp.raise_for_status()
 
-        file_bytes = io.BytesIO(resp.content)
-        npz = np.load(file_bytes, allow_pickle=True)
-
-        status.update(
-            label="Dataset ready ✓",
-            state="complete",
-            expanded=False
-        )
-
-    return npz
+    file_bytes = io.BytesIO(resp.content)
+    return np.load(file_bytes, allow_pickle=True)
 
 # -------------------------------------------------------------------
 # Device selection
@@ -80,6 +66,23 @@ st.set_page_config(page_title="Music Generation Demo", layout="wide")
 
 st.title("🎵 GRU Music Generator")
 st.caption(f"Running on: **{device_label}**")
+
+if FULL_SEQS_PATH.exists():
+    # Local / dev: no download
+    full_sequences_npz = load_sequences()
+else:
+    # Cloud / first-time: show status while handling download/cache
+    with st.spinner(
+        "Downloading dataset from cloud storage (this may take several seconds)…",
+        expanded=True,
+    ) as status:
+        full_sequences_npz = load_sequences()
+        status.update(
+            label="Dataset ready ✓",
+            state="complete",
+            expanded=False,
+        )
+
 st.write(
     "This app showcases a GRU-based music generation model. "
     "You can generate music by selecting a preset melody seed, building a custom seed using a piano-style interface, "
