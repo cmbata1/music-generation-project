@@ -1,3 +1,4 @@
+import io
 from pathlib import Path
 
 import numpy as np
@@ -28,19 +29,36 @@ GENERATED_DIR.mkdir(exist_ok=True)
 
 DATA_URL = "https://musicgenapp.blob.core.windows.net/datasets/full_sequences.npz"
 
-# Auto-download if missing
-if not FULL_SEQS_PATH.exists():
-    st.warning("Dataset not found locally. Downloading now...")
-    try:
-        response = requests.get(DATA_URL, stream=True)
-        response.raise_for_status()
-        with open(FULL_SEQS_PATH, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-        st.success("Dataset downloaded successfully.")
-    except Exception as e:
-        st.error(f"Failed to download dataset: {e}")
-        st.stop()
+# -------------------------------------------------------------------
+# Data loading with caching
+# -------------------------------------------------------------------
+
+@st.cache_resource
+def load_sequences():
+    """Load full_sequences.npz (local-first, blob fallback)."""
+    
+    # 1) Local fast path (dev or previously saved)
+    if FULL_SEQS_PATH.exists():
+        return np.load(FULL_SEQS_PATH, allow_pickle=True)
+
+    # 2) Blob fallback with UI
+    with st.status(
+        "Downloading dataset from cloud storage…", 
+        expanded=True
+    ) as status:
+        resp = requests.get(DATA_URL, stream=True)
+        resp.raise_for_status()
+
+        file_bytes = io.BytesIO(resp.content)
+        npz = np.load(file_bytes, allow_pickle=True)
+
+        status.update(
+            label="Dataset ready ✓",
+            state="complete",
+            expanded=False
+        )
+
+    return npz
 
 # -------------------------------------------------------------------
 # Device selection
