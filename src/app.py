@@ -67,19 +67,6 @@ st.set_page_config(page_title="Music Generation Demo", layout="wide")
 st.title("🎵 GRU Music Generator")
 st.caption(f"Running on: **{device_label}**")
 
-if FULL_SEQS_PATH.exists():
-    # Local / dev: no download
-    full_sequences_npz = load_sequences()
-else:
-    with st.status("Loading dataset…", expanded=True) as status:
-        full_sequences_npz = load_sequences()
-        status.update(
-            label="Dataset ready ✅",
-            state="complete",
-            expanded=False,
-        )
-
-
 st.write(
     "This app showcases a GRU-based music generation model. "
     "You can generate music by selecting a preset melody seed, building a custom seed using a piano-style interface, "
@@ -97,7 +84,7 @@ def load_model_and_data():
     # Load processed data
     with st.spinner("Loading dataset…"):
         data = load_sequences()
-    st.success("Dataset ready ✅")
+    st.success("Dataset ready ✅")   
     X_ids = data["X"]
     vocab = data["vocab"]  # shape: (vocab_size, 2) [pitch, bucket]
 
