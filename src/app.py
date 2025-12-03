@@ -72,7 +72,7 @@ if FULL_SEQS_PATH.exists():
     full_sequences_npz = load_sequences()
 else:
     # Cloud / first-time: show status while handling download/cache
-    with st.spinner(
+    with st.status(
         "Downloading dataset from cloud storage (this may take several seconds)…",
         expanded=True,
     ) as status:
