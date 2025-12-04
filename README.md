@@ -35,6 +35,10 @@ If you prefer to run the project on your own machine—for development, testing,
 
 ## Video Links
 
+[Project Demo](https://drive.google.com/file/d/1O3BlNMkAQOGhXSutjb5lJe8mTz-Tyq4c/view?usp=sharing)
+
+[Technical Walkthrough]()
+
 ## Evaluation
 
 ### Model Configurations (Summary)
