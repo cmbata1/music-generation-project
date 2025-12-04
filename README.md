@@ -35,9 +35,9 @@ If you prefer to run the project on your own machine—for development, testing,
 
 ## Video Links
 
-[Project Demo](https://duke.box.com/s/uv8g5wyakvu90d73iypkgsizzk1ucg8i)
+[Project Demo](https://drive.google.com/file/d/1O3BlNMkAQOGhXSutjb5lJe8mTz-Tyq4c/view?usp=sharing)
 
-[Technical Walkthrough](https://duke.box.com/s/0og27s94vu5ciwg011vnhrn0urd26wbc)
+[Technical Walkthrough](https://drive.google.com/file/d/1T-0nvhHh5vvcO4lI7zhwOns7lVd4AAWF/view?usp=sharing)
 
 ## Evaluation
 
