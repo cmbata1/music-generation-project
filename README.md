@@ -37,7 +37,7 @@ If you prefer to run the project on your own machine—for development, testing,
 
 [Project Demo](https://duke.box.com/s/uv8g5wyakvu90d73iypkgsizzk1ucg8i)
 
-[Technical Walkthrough]()
+[Technical Walkthrough](https://duke.box.com/s/0og27s94vu5ciwg011vnhrn0urd26wbc)
 
 ## Evaluation
 
