@@ -1,8 +1,8 @@
 # Music Generation with GRUs
-A sequence-modeling project that generates short musical melodies from either preset motifs or user-defined seeds.
+A sequence-modeling project that generates short musical melodies from either preset or user-defined input sequence.
 
 ## What it Does
-This project generates short musical melodies using a GRU-based neural network trained on classical, monophonic MIDI data. It produces new music by continuing from an initial seed sequence, which can be chosen in three ways: using a built-in example melody (such as the C-major scale or Are You Sleeping), selecting a random snippet drawn directly from the training dataset, or entering custom notes through a simple seven-key piano interface from middle C to B. The model aims to create sequences that evolve smoothly and sound musically plausible in pitch and timing, and an interactive Streamlit app makes it easy to select a seed, generate music, and listen instantly.
+This project generates short musical melodies using a GRU-based neural network trained on classical MIDI data. It produces new music by continuing from an initial seed sequence, which can be chosen in three ways: using a built-in example melody (such as the C-major scale or Are You Sleeping), selecting a random snippet drawn directly from the training dataset, or entering custom notes through a simple seven-key piano interface from middle C to B. The model aims to create sequences that evolve smoothly and sound musically plausible in pitch and timing, and an interactive Streamlit app makes it easy to select a seed, generate music, and listen instantly.
 
 
 ## Quick Start
@@ -20,7 +20,7 @@ This may take several seconds depending on your connection. Subsequent runs use 
 
 ### Running Locally (Optional)
 
-If you prefer to run the project on your own machine—for development, testing, or deeper exploration—please see:
+If you prefer to run the project on your own machine for development, testing, or deeper exploration, please see:
 
 **[`SETUP.md`](./SETUP.md)**
 
