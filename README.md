@@ -1,5 +1,5 @@
 # Music Generation with GRUs
-A sequence-modeling project that generates short musical melodies from either preset or user-defined input sequence.
+A sequence-modeling project that generates short musical melodies from either preset or user-defined input sequences.
 
 ## What it Does
 This project generates short musical melodies using a GRU-based neural network trained on classical MIDI data. It produces new music by continuing from an initial seed sequence, which can be chosen in three ways: using a built-in example melody (such as the C-major scale or Are You Sleeping), selecting a random snippet drawn directly from the training dataset, or entering custom notes through a simple seven-key piano interface from middle C to B. The model aims to create sequences that evolve smoothly and sound musically plausible in pitch and timing, and an interactive Streamlit app makes it easy to select a seed, generate music, and listen instantly.
