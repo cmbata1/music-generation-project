@@ -13,8 +13,7 @@ The easiest way to run this project is through the hosted Streamlit app:
 
 This version requires no installation.
 
-⚠️ Note: On first run, the app may download the processed dataset (~300 MB) from cloud storage if it is not cached.
-This may take several seconds depending on your connection. Subsequent runs use the cached copy and load instantly.
+⚠️ Note: This app runs on the free Streamlit Cloud. If inactive, it may take 30–60 seconds to wake and download the processed dataset (~300 MB) on the first run. Once cached, subsequent runs load instantly.
 
 ---
 
