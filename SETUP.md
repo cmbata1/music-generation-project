@@ -11,7 +11,7 @@ This document provides installation and setup instructions for running the music
 - Python 3.9–3.12
   - The project was originally developed with Python 3.9, but has been tested and works with 3.9, 3.10, 3.11, and 3.12.
 - pip for installing dependencies
-- (Recommended) virtual environment (`venv` or `conda`)
+- (Recommended) virtual environment (`venv`)
 
 ## 1. Clone the repository
 ```bash
