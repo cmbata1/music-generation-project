@@ -50,7 +50,7 @@ The processed dataset file `data/processed/full_sequences.npz` is too large to s
 #### Option A: Script
 Run the helper script to download automatically into the correct folder:
 ```bash
-python scripts/download_data.py
+python data/scripts/download_data.py
 ```
 #### Option B: Manual
 1. Download `full_sequences.npz` from [Google Drive](https://drive.google.com/uc?export=download&id=1429pDRYHCXQVSgCHpqJdEzHMUDTn5PtU).
