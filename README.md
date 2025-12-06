@@ -61,6 +61,7 @@ GRU models outperform by a wide margin:
 | bigger_GRU  | 0.26               | —             |
 
 The medium GRU generalizes well on a held‑out test set, confirming stability beyond validation.
+Since the simple baselines reach only about 3–4% accuracy, the GRU’s ~26% accuracy shows that the model is learning real patterns in the music rather than simply guessing common notes.
 
 ---
 
