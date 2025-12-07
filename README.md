@@ -9,11 +9,11 @@ This project generates short musical melodies using a GRU-based neural network t
 
 The easiest way to run this project is through the hosted Streamlit app:
 
-🔗 **Live Streamlit App:**  https://musicgen-demo.streamlit.app
+**Live Streamlit App:**  https://musicgen-demo.streamlit.app
 
 This version requires no installation.
 
-⚠️ Note: This app runs on the free Streamlit Cloud. If inactive, it may take 30–60 seconds to wake and download the processed dataset (~300 MB) on the first run. Once cached, subsequent runs load instantly.
+Note: This app runs on the free Streamlit Cloud. After periods of inactivity, it may take 1-2 minutes to wake and download the processed dataset (~300 MB) on the first run. Once cached, subsequent runs load instantly.
 
 ---
 
