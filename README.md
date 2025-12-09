@@ -2,22 +2,23 @@
 A sequence-modeling project that generates short musical melodies starting from either preset or user-defined input sequences.
 
 ## What it Does
-This project generates short musical melodies using a GRU-based neural network trained on classical MIDI data. It produces new music by continuing from an initial seed sequence, which can be chosen in three ways: using a built-in example melody (such as the C-major scale or Are You Sleeping), selecting a random snippet drawn directly from the training dataset, or entering custom notes through a simple seven-key piano interface from middle C to B. The model aims to create sequences that evolve smoothly and sound musically plausible in pitch and timing, and an interactive Streamlit app makes it easy to select a seed, generate music, and listen instantly.
+This project generates short musical melodies using a GRU-based neural network trained on classical MIDI data. It produces new music by continuing from an initial seed sequence, which can be chosen in three ways: using a built-in example melody (such as the C-major scale or Are You Sleeping), selecting a random snippet drawn directly from the training dataset, or entering custom notes through a simple seven-key piano interface from middle C to B. The app also lets users experiment with generation parameters such as temperature (controlling randomness and creativity) and max tokens (controlling the length of the generated sequence), giving more flexibility in shaping the musical output. The model aims to create sequences that evolve smoothly and sound musically plausible in pitch and timing, and an interactive Streamlit app makes it easy to select a seed, generate music, and listen instantly. 
 
 
 ## Quick Start
 
+### Run Online
 The easiest way to run this project is through the hosted Streamlit app:
 
 **Live Streamlit App:**  https://musicgen-demo.streamlit.app
 
-This version requires no installation.
+This version requires no installation. Once loaded, you can select a starting melody (preset, custom, or random from the dataset) and generate music.
 
-Note: This app runs on the free Streamlit Cloud. After periods of inactivity, it may take 1-2 minutes to wake and download the processed dataset (~300 MB) on the first run. Once cached, subsequent runs load instantly.
+Note: After periods of inactivity, it may take 1-2 minutes to wake and download the processed dataset (~300 MB) on the first run. Once cached, subsequent runs load instantly.
 
 ---
 
-### Running Locally (Optional)
+### Run Locally (Optional)
 
 If you prefer to run the project on your own machine for development, testing, or deeper exploration, please see:
 
